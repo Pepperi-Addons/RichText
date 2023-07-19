@@ -1,0 +1,25 @@
+
+<!-- <pep-textarea [value]="htmlText" 
+              [label]="'EDITOR.DESCRIPTION' | translate" 
+              [readonly]="true"
+              [isActive]="false"
+              rowSpan="2">
+</pep-textarea> -->
+<pep-rich-html-textarea [key]="'richText1'" 
+                        [renderTitle]="false" 
+                        [renderEnlargeButton]="true"
+                        [value]="richHtml" 
+                        [rowSpan]="3" 
+                        [maxFieldCharacters]="300" 
+                        [xAlignment]="'left'" 
+                        [inlineMode]="false"
+                        (valueChange)="richTextChanged($event)">
+</pep-rich-html-textarea>
+<div>
+    <label class="body-lg bold ellipsis">{{'EDITOR.ONLOAD_FLOW' | translate}}</label>
+    <label class="body-xs normal">{{'EDITOR.FLOW_ONLOAD_DESC' | translate}}</label>
+    <pep-button class="script-button" 
+                [value]="onLoadFlowName ? onLoadFlowName : ('EDITOR.ONLOAD_FLOW' | translate)" 
+                (buttonClick)="openFlowPickerDialog()">
+    </pep-button>
+ </div>

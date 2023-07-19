@@ -1,0 +1,10 @@
+{
+    "Block_Title": "Block title",
+    "EDITOR": {
+        "ONLOAD_FLOW": "Onload flow",
+        "CHOOSE_FLOW": "Flow",
+        "FLOW_ONLOAD_DESC": "Choose the flow you want to activate in On Load Event"
+    }
+
+}
+
