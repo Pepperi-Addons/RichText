@@ -1,15 +1,13 @@
 import { Client, Context, IClient, IContext } from '@pepperi-addons/cpi-node/build/cpi-side/events';
 import { CLIENT_ACTION_ON_CLIENT_APP_RICHTEXT_LOAD } from 'shared';
 import { FlowObject, RunFlowBody } from '@pepperi-addons/cpi-node';
-import { AddonUUID } from '../addon.config.json';
+
 class RichTextCPIService {
-    constructor() { const a = 2; }
     public async getOptionsFromFlow(eventData: any): Promise<any> {
-        
         const flowStr = eventData.Flow;
         const parameters = eventData.Parameters;
+        const context = eventData.client.context;
         const flowData: FlowObject = flowStr?.length ? JSON.parse(Buffer.from(flowStr, 'base64').toString('utf8')) : {};
-        
         if (flowData?.FlowKey?.length > 0) {
             const dynamicParamsData: any = {};
             if (flowData.FlowParams) {
@@ -28,17 +26,15 @@ class RichTextCPIService {
             }
             const flowToRun: RunFlowBody = { RunFlow: flowData, Data: dynamicParamsData};
             // TODO: Remove one of the context properties.
-            if (eventData.client?.context) {
-                flowToRun['context'] = eventData;
-                flowToRun['Context'] = eventData;
+            if (context) {
+                flowToRun['context'] = context;
+                flowToRun['Context'] = context;
             }
             // Run the flow and return the options.
             const res = await pepperi.flows.run(flowToRun);
             return res;
         }
-        else {
-            return {};
-        }
+        else { return {}; }
     }
 }
 export default RichTextCPIService;

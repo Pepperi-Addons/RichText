@@ -2,7 +2,7 @@
      [ngStyle]="{'justify-content': configuration?.Structure?.Alignment?.Horizontal || 'start'}"
      [ngClass]="['inner_padding_' + configuration?.Structure?.InnerPadding || 'sm']">
     <div class="ql-editor" 
-        [innerHtml]="htmlStr"
+        [innerHtml]="htmlStr || ''"
         [ngStyle]="{'height': configuration?.Structure?.FillHeight ? '100%' : (configuration?.Structure?.Height + 'rem'),
                     'max-width': (configuration?.Structure?.MaxWidth + '%') || '100%'}">
     </div>

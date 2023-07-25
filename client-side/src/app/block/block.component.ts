@@ -14,7 +14,6 @@ export class BlockComponent implements OnInit {
     @Input()
     set hostObject(value: IHostObject) {
         this._configuration = value?.configuration;
-        this.htmlStr = this.configuration.RichText || '';
     }
     
     private _configuration: RichText; // = this.getDefaultHostObject();
@@ -30,38 +29,37 @@ export class BlockComponent implements OnInit {
     constructor(private translate: TranslateService) {
     }
 
-    async ngOnInit(): Promise<void> {
+    ngOnInit(){
         // check if on load flow customized to this block
         if(this._configuration?.OnLoadFlow?.length)
         {
-            //await this.emitOnLoadFlow();
-            this.configuration = await this.emitOnLoadFlow();
+             this.emitOnLoadFlow()
+  
         }
-
-        this.htmlStr = this.configuration?.RichText || '';
+        else{
+            this.htmlStr = this.configuration?.RichText || '';
+        }
     }
 
     ngOnChanges(e: any): void {
  
     }
 
-    private emitOnLoadFlow(){
-        let retObj = this.configuration;
+    emitOnLoadFlow(): void{
+        const self = this;
         try{
             const eventData = {
                 detail: {
                     eventKey: CLIENT_ACTION_ON_CLIENT_APP_RICHTEXT_LOAD,
                     eventData: { Flow: this.configuration.OnLoadFlow, Parameters: {OnLoad: this.configuration} },
-                    completion: (res: RichText) => {
+                    completion: (res: any) => {
                             if (res) {
-                                retObj =  res;
+                                self.configuration = res.configuration != '' ? res.configuration : self._configuration;
+                                self.htmlStr = self.configuration.RichText || '';
                             } else {
                                 // Show default error.
                               
                             }
-                    },
-                    finally(){
-                        return retObj;
                     }
                 }
             };
@@ -70,7 +68,7 @@ export class BlockComponent implements OnInit {
             window.dispatchEvent(customEvent);
         }
         catch(err){
-            return retObj;
+            
         }
     }
 }
