@@ -1,25 +1,45 @@
-
-<!-- <pep-textarea [value]="htmlText" 
-              [label]="'EDITOR.DESCRIPTION' | translate" 
-              [readonly]="true"
-              [isActive]="false"
-              rowSpan="2">
-</pep-textarea> -->
-<pep-rich-html-textarea [key]="'richText1'" 
-                        [renderTitle]="false" 
-                        [renderEnlargeButton]="true"
-                        [value]="richHtml" 
-                        [rowSpan]="3" 
-                        [maxFieldCharacters]="300" 
-                        [xAlignment]="'left'" 
-                        [inlineMode]="false"
-                        (valueChange)="richTextChanged($event)">
-</pep-rich-html-textarea>
 <div>
-    <label class="body-lg bold ellipsis">{{'EDITOR.ONLOAD_FLOW' | translate}}</label>
-    <label class="body-xs normal">{{'EDITOR.FLOW_ONLOAD_DESC' | translate}}</label>
+    <pep-checkbox class="checkbox-as-title" [value]="configuration?.Structure?.FillHeight || false" [label]="'FILL_HEIGHT_SECTION_TITLE' | translate" [renderTitle]="false" (valueChange)="onFieldChange('Structure.FillHeight',$event)"></pep-checkbox>
+    <span class="header-title body-xs checkbox-description">{{('FILL_HEIGHT_SECTION_DESCRIPTION' | translate)}}</span>
+</div>
+<div>
+    <pep-textbox [label]="'HEIGHT' | translate" type="real" [disabled]="configuration?.Structure?.FillHeight || false"
+                [value]="configuration?.Structure?.Height" (valueChange)="onFieldChange('Structure.Height',$event)">
+    </pep-textbox>
+
+    <pep-textbox [label]="'MAX_WIDTH' | translate" type="string" [disabled]="configuration?.Structure?.FillHeight || false"
+                [value]="configuration?.Structure?.MaxWidth" (valueChange)="onFieldChange('Structure.MaxWidth',$event)">
+    </pep-textbox>
+</div>
+<div class="ql-editor">
+    <pep-rich-html-textarea [key]="'richText1'" 
+                            [renderTitle]="false" 
+                            [renderEnlargeButton]="true"
+                            [value]="richHtml" 
+                            [rowSpan]="3" 
+                            [maxFieldCharacters]="300" 
+                            [xAlignment]="'left'" 
+                            [inlineMode]="false"
+                            (valueChange)="richTextChanged($event)">
+    </pep-rich-html-textarea>
+</div>
+
+<pep-group-buttons-settings 
+                    [groupType]="'sizes'" [subHeader]="'INNERPADDING_TITLE' | translate"
+                    [btnKey]="configuration?.Structure?.InnerPadding || 'sm'" [excludeKeys]="['xs','xl']"
+                    (btnkeyChange)="onFieldChange('Structure.InnerPadding',$event)">
+</pep-group-buttons-settings> 
+
+<pep-group-buttons-settings 
+[groupType]="'horizontal-align'" [subHeader]="'HORIZONTAL_ALIGN' | translate"
+[btnKey]="configuration?.Structure?.Alignment?.Horizontal"
+(btnkeyChange)="onFieldChange('Structure.Alignment.Horizontal',$event)">
+</pep-group-buttons-settings>
+<div>
+    <label class="body-lg bold ellipsis">{{'ONLOAD_FLOW' | translate}}</label>
+    <label class="body-xs normal">{{'FLOW_ONLOAD_DESC' | translate}}</label>
     <pep-button class="script-button" 
-                [value]="onLoadFlowName ? onLoadFlowName : ('EDITOR.ONLOAD_FLOW' | translate)" 
+                [value]="onLoadFlowName ? onLoadFlowName : ('ONLOAD_FLOW' | translate)" 
                 (buttonClick)="openFlowPickerDialog()">
     </pep-button>
  </div>

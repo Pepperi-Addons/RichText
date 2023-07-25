@@ -7,14 +7,20 @@ import { PepTextareaModule } from '@pepperi-addons/ngx-lib/textarea';
 import { config } from '../app.config';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
+import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
+import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
+import { PepGroupButtonsSettingsModule } from '@pepperi-addons/ngx-composite-lib/group-buttons-settings';
 
 @NgModule({
     declarations: [BlockEditorComponent],
     imports: [
         CommonModule,
         PepButtonModule,
+        PepTextboxModule,
+        PepGroupButtonsSettingsModule,
         PepRichHtmlTextareaModule,
         PepTextareaModule,
+        PepCheckboxModule,
         TranslateModule.forChild({
             loader: {
                 provide: TranslateLoader,

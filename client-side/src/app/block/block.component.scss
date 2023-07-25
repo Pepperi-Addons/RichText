@@ -1,0 +1,19 @@
+@use '@pepperi-addons/ngx-lib/src/core/style/abstracts/variables' as ngx-variables;
+
+.richTextCont{
+    display: flex;
+    .ql-editor{
+        height: inherit;
+        width: inherit;
+    }
+
+    &.inner_padding_sm{
+        padding: ngx-variables.$spacing-md;
+    }
+    &.inner_padding_md{
+        padding: ngx-variables.$spacing-lg;
+    }
+    &.inner_padding_lg{
+        padding: ngx-variables.$spacing-xl;
+    }
+}

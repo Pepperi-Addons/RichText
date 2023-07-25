@@ -1,10 +1,12 @@
 {
-    "Block_Title": "Block title",
-    "EDITOR": {
-        "ONLOAD_FLOW": "Onload flow",
-        "CHOOSE_FLOW": "Flow",
-        "FLOW_ONLOAD_DESC": "Choose the flow you want to activate in On Load Event"
-    }
-
+    "FILL_HEIGHT_SECTION_TITLE": "Fill Height",
+    "FILL_HEIGHT_SECTION_DESCRIPTION": "Set Fill Height on to make the view to fill the section height",
+    "HEIGHT": "Height (rem)",
+    "MAX_WIDTH": "Max width (%)",
+    "ONLOAD_FLOW": "Onload flow",
+    "CHOOSE_FLOW": "Flow",
+    "FLOW_ONLOAD_DESC": "Choose the flow you want to activate in On Load Event",
+    "HORIZONTAL_ALIGN": "Horizontal align",
+    "INNERPADDING_TITLE": "Inner padding"
 }
 

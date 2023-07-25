@@ -2,6 +2,7 @@ import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, OnInit, Output, ViewContainerRef } from '@angular/core';
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { MatDialogRef } from '@angular/material/dialog';
+import { RichTextService } from 'src/services/rich-text.service';
 import { RichText } from 'shared';
 
 @Component({
@@ -13,7 +14,13 @@ export class BlockEditorComponent implements OnInit {
 
     @Input()
     set hostObject(value: any) {
-        this._configuration = value?.configuration;
+        if (value && value.configuration && Object.keys(value.configuration).length > 0) {
+            this._configuration = value.configuration  
+        } else {
+            if(this.blockLoaded){
+                this.loadDefaultConfiguration();
+            }
+        }
     }
 
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
@@ -30,44 +37,103 @@ export class BlockEditorComponent implements OnInit {
     public onLoadFlowName = undefined;
     richHtml = '';
     htmlText = '';
+    blockLoaded = false;
 
     constructor(private translate: TranslateService,
                 private viewContainerRef: ViewContainerRef,
-                private addonBlockLoaderService: PepAddonBlockLoaderService) {
-        
-                this.richHtml =
-            "<h1><u>Rich Text Value Example</u></h1><h2><em style=' color: rgb(147, 200, 14);'>Pepperi Rich Text Value </em><u style='color: rgb(0, 102, 204);'>Example</u></h2><ol><li><strong><u>Pepperi Rich Text Value Example</u></strong></li><li>Pepperi Rich text [value] example</li><li>Pepperi Rich text [value] example</li><li>Pepperi Rich text [value] example</li><li>Pepperi Rich text [value] example</li></ol>";
-   
-    }
+                private richTextService: RichTextService,
+                private addonBlockLoaderService: PepAddonBlockLoaderService) {}
 
-    ngOnInit(): void {
-        //this.htmlText = this.stripHtml(this.richHtml);
+    async ngOnInit(): Promise<void> {
+
+        if (!this.configuration) {
+            this.loadDefaultConfiguration();
+        }
+
+        this.richHtml = this.configuration.RichText || '';
+
+        if(this.configuration.OnLoadFlow){
+            const flow = JSON.parse(atob(this.configuration.OnLoadFlow));
+            this.onLoadFlowName = await this.richTextService.getFlowName(flow.FlowKey) || undefined;
+        }
+
+        // block loaded must be the last line in onInit function
+        this.blockLoaded = true;
     }
 
     ngOnChanges(e: any): void {
        
     }
 
-    richTextChanged(event){
-        //TODO - NEED TO UPDATE HOST OBJECT
-        //this.htmlText = this.stripHtml(event);
+    private loadDefaultConfiguration() {
+        this._configuration = this.getDefaultHostObject();
+        this.updateHostObject();
     }
 
-    // stripHtml(html) {
-    //     var textarea = document.createElement("textarea");
-    //     textarea.innerHTML = html;
-    //     var temporalDivElement = document.createElement("p");
-    //     temporalDivElement.innerHTML = textarea.value;
-    //     return temporalDivElement.textContent || temporalDivElement.innerText || "";
-    // }
+    private getDefaultHostObject(): RichText {
+        return  new RichText;
+    }
+
+    private updateHostObject() { 
+        this.hostEvents.emit({
+            action: 'set-configuration',
+            configuration: this.configuration
+        });
+    }
+
+    private updateHostObjectField(fieldKey: string, value: any) {
+        this.hostEvents.emit({
+            action: 'set-configuration-field',
+            key: fieldKey, 
+            value: value
+        });
+    }
+
+    onFieldChange(key, event){
+        const value = event && event.source && event.source.key ? event.source.key : event && event.source && event.source.value ? event.source.value :  event;
+        
+        if(key.indexOf('.') > -1){
+            let keyObj = key.split('.');
+            this.configuration[keyObj[0]][keyObj[1]] = value;
+        }
+        else{
+            this.configuration[key] = value;
+        }
+  
+        this.updateHostObjectField(`${key}`, value);
+    }
+
+    richTextChanged(event){
+        this.onFieldChange('RichText',event);
+    }
+
+    private onClientRichTextLoad(){
+        try{
+            const eventData = {
+                detail: {
+                    eventKey: 'OnClientRichTextLoad',
+                    eventData: {},
+                    completion: (res: any) => {
+                            if (res) {
+                                this.configuration = res;
+                            } else {
+                                // Show default error.
+                            }
+                        }
+                }
+            };
+
+            const customEvent = new CustomEvent('emit-event', eventData);
+            window.dispatchEvent(customEvent);
+        }
+        catch(err){
+
+        }
+    }
 
     openFlowPickerDialog() {
-        //const flow = this.configuration.SlideshowConfig.OnLoadFlow ? JSON.parse(atob(this.configuration.SlideshowConfig.OnLoadFlow)) : null;
+        const flow = this.configuration.OnLoadFlow ? JSON.parse(atob(this.configuration.OnLoadFlow)) : null;
         let hostObj = {};
-        const flow = {
-            FlowKey: null,
-            FlowParams: null
-        };
         
         if(flow){
             hostObj = { 
@@ -105,10 +171,10 @@ export class BlockEditorComponent implements OnInit {
             hostEventsCallback: async (event) => {
                 if (event.action === 'on-done') {
                                 const base64Flow = btoa(JSON.stringify(event.data));
-                                //this.configuration.SlideshowConfig.OnLoadFlow = event.data?.FlowKey !== '' ? base64Flow : null;
-                                //this.updateHostObject();
+                                this.configuration.OnLoadFlow = event.data?.FlowKey !== '' ? base64Flow : null;
+                                this.updateHostObject();
                                 this.dialogRef.close();
-                                //this.onLoadFlowName = this.configuration.SlideshowConfig.OnLoadFlow ?  await this.slideshowService.getFlowName(event.data?.FlowKey) : undefined;
+                                this.onLoadFlowName = this.configuration.OnLoadFlow ?  await this.richTextService.getFlowName(event.data?.FlowKey) : undefined;
                 } else if (event.action === 'on-cancel') {
                                 this.dialogRef.close();
                 }
