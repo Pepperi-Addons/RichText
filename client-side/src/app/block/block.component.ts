@@ -42,7 +42,7 @@ export class BlockComponent implements OnInit {
     }
 
     ngOnChanges(e: any): void {
- 
+        this.htmlStr = this.configuration.RichText || '';
     }
 
     emitOnLoadFlow(): void{
