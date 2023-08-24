@@ -15,7 +15,8 @@ export class BlockEditorComponent implements OnInit {
     @Input()
     set hostObject(value: any) {
         if (value && value.configuration && Object.keys(value.configuration).length > 0) {
-            this._configuration = value.configuration  
+            this._configuration = value.configuration ;
+            this.prepareFlowHostObject(); 
         } else {
             if(this.blockLoaded){
                 this.loadDefaultConfiguration();
@@ -34,10 +35,11 @@ export class BlockEditorComponent implements OnInit {
     }
 
     dialogRef: MatDialogRef<any>;
-    public onLoadFlowName = undefined;
+
     richHtml = '';
     htmlText = '';
     blockLoaded = false;
+    flowHostObject;
 
     constructor(private translate: TranslateService,
                 private viewContainerRef: ViewContainerRef,
@@ -52,11 +54,6 @@ export class BlockEditorComponent implements OnInit {
 
         this.richHtml = this.configuration.RichText || '';
 
-        if(this.configuration.OnLoadFlow){
-            const flow = JSON.parse(atob(this.configuration.OnLoadFlow));
-            this.onLoadFlowName = await this.richTextService.getFlowName(flow.FlowKey) || undefined;
-        }
-
         // block loaded must be the last line in onInit function
         this.blockLoaded = true;
     }
@@ -68,6 +65,7 @@ export class BlockEditorComponent implements OnInit {
     private loadDefaultConfiguration() {
         this._configuration = this.getDefaultHostObject();
         this.updateHostObject();
+        this.prepareFlowHostObject();
     }
 
     private getDefaultHostObject(): RichText {
@@ -107,78 +105,27 @@ export class BlockEditorComponent implements OnInit {
         this.onFieldChange('RichText',event);
     }
 
-    private onClientRichTextLoad(){
-        try{
-            const eventData = {
-                detail: {
-                    eventKey: 'OnClientRichTextLoad',
-                    eventData: {},
-                    completion: (res: any) => {
-                            if (res) {
-                                this.configuration = res;
-                            } else {
-                                // Show default error.
-                            }
-                        }
-                }
-            };
-
-            const customEvent = new CustomEvent('emit-event', eventData);
-            window.dispatchEvent(customEvent);
-        }
-        catch(err){
-
-        }
+    onFlowChange(flowData: any) {
+        const base64Flow = btoa(JSON.stringify(flowData));
+        this.configuration.OnLoadFlow = base64Flow;
+        this.updateHostObject();
     }
 
-    openFlowPickerDialog() {
-        const flow = this.configuration.OnLoadFlow ? JSON.parse(atob(this.configuration.OnLoadFlow)) : null;
-        let hostObj = {};
-        
-        if(flow){
-            hostObj = { 
-                runFlowData: { 
-                    FlowKey: flow.FlowKey, 
-                    FlowParams: flow.FlowParams 
-                },
-                fields: {
-                    OnLoad: {
-                        Type: 'Object',
-                    },
-                    Test: {
-                        Type: 'String'
-                    }
-                }
-            };
-        } else{
-            hostObj = { 
-                fields: {
-                        OnLoad: {
-                            Type: 'Object',
-                        },
-                        Test: {
-                            Type: 'String'
-                        }
-                    },
-                }
+
+    private prepareFlowHostObject() {
+        this.flowHostObject = {};
+        const runFlowData = this.configuration?.OnLoadFlow  ?  JSON.parse(atob(this.configuration.OnLoadFlow)) : null;
+        const fields = {};
+
+        if (runFlowData) {
+            this.richTextService.flowDynamicParameters.forEach((value, key) => {
+                fields[key] = {
+                    Type: value || 'String'
+                };
+            });
         }
         
-        this.dialogRef = this.addonBlockLoaderService.loadAddonBlockInDialog({
-            container: this.viewContainerRef,
-            name: 'FlowPicker',
-            size: 'large',
-            hostObject: hostObj,
-            hostEventsCallback: async (event) => {
-                if (event.action === 'on-done') {
-                                const base64Flow = btoa(JSON.stringify(event.data));
-                                this.configuration.OnLoadFlow = event.data?.FlowKey !== '' ? base64Flow : null;
-                                this.updateHostObject();
-                                this.dialogRef.close();
-                                this.onLoadFlowName = this.configuration.OnLoadFlow ?  await this.richTextService.getFlowName(event.data?.FlowKey) : undefined;
-                } else if (event.action === 'on-cancel') {
-                                this.dialogRef.close();
-                }
-            }
-        });
+        this.flowHostObject['runFlowData'] = runFlowData?.FlowKey ? runFlowData : undefined;
+        this.flowHostObject['fields'] = fields;
     }
 }

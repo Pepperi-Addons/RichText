@@ -76,7 +76,8 @@ export class RelationsService {
                 ElementName: `${blockName.toLocaleLowerCase()}-element-${this.client.AddonUUID}`,
                 EditorComponentName: `${blockName}EditorComponent`, // This is should be the block editor component name (from the client-side)
                 EditorModuleName: `${blockName}EditorModule`, // This is should be the block editor module name (from the client-side)}
-                EditorElementName: `${blockName.toLocaleLowerCase()}-editor-element-${this.client.AddonUUID}`
+                EditorElementName: `${blockName.toLocaleLowerCase()}-editor-element-${this.client.AddonUUID}`,
+                BlockLoadEndpoint: "/addon-cpi/on_block_load"
         }
         return await this.upsertRelation(blockRelation);
     }

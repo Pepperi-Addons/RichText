@@ -9,6 +9,8 @@ import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
 import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
 import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
 import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
+import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
+import { PepFlowPickerButtonModule } from '@pepperi-addons/ngx-composite-lib/flow-picker-button';
 import { PepGroupButtonsSettingsModule } from '@pepperi-addons/ngx-composite-lib/group-buttons-settings';
 
 @NgModule({
@@ -17,6 +19,8 @@ import { PepGroupButtonsSettingsModule } from '@pepperi-addons/ngx-composite-lib
         CommonModule,
         PepButtonModule,
         PepTextboxModule,
+        PepFlowPickerButtonModule,
+        PepFieldTitleModule,
         PepGroupButtonsSettingsModule,
         PepRichHtmlTextareaModule,
         PepTextareaModule,

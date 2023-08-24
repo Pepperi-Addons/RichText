@@ -1,4 +1,3 @@
-export declare const CLIENT_ACTION_ON_CLIENT_APP_RICHTEXT_LOAD = "OnClientRichTextLoad";
 export declare type PepHorizontalAlignment = 'left' | 'center' | 'right';
 export declare type PepSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export interface IHostObject {

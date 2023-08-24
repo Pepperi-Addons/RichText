@@ -1,5 +1,4 @@
 import '@pepperi-addons/cpi-node'
-import { CLIENT_ACTION_ON_CLIENT_APP_RICHTEXT_LOAD } from 'shared';
 import RichTextCPIService from './rich-text-cpi.service';
 import { IContextWithData } from '@pepperi-addons/cpi-node/build/cpi-side/events';
 
@@ -14,9 +13,14 @@ router.get('/test', (req, res) => {
     })
 })
 
-  // Handle on application header load
-  pepperi.events.intercept(CLIENT_ACTION_ON_CLIENT_APP_RICHTEXT_LOAD as any, {}, async (data): Promise<any> => {
-    const cpiService = new RichTextCPIService();
-    const res = await cpiService.getOptionsFromFlow(data);
-    return res;
+router.post('/on_block_load', async (req, res) => {
+    let configuration = req?.body?.Configuration;
+    // check if flow configured to on load --> run flow (instaed of onload event)
+    if (configuration?.OnLoadFlow){
+        const cpiService = new RichTextCPIService();
+        //CALL TO FLOWS AND SET CONFIGURATION
+        const result: any = await cpiService.getOptionsFromFlow(configuration.OnLoadFlow || [], {configuration}, req.context);
+        configuration = result?.configuration || configuration;
+    }
+    res.json({Configuration: configuration});
 });

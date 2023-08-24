@@ -1,10 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RichText = exports.Alignment = exports.Structure = exports.CLIENT_ACTION_ON_CLIENT_APP_RICHTEXT_LOAD = void 0;
-// **********************************************************************************************
-//                          Client & User events const
-// **********************************************************************************************
-exports.CLIENT_ACTION_ON_CLIENT_APP_RICHTEXT_LOAD = 'OnClientRichTextLoad';
+exports.RichText = exports.Alignment = exports.Structure = void 0;
 class Structure {
     constructor() {
         this.FillHeight = false;
