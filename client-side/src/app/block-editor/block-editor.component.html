@@ -13,7 +13,8 @@
 </div>
 <div class="ql-editor">
     <pep-rich-html-textarea [key]="'richText1'" 
-                            [renderTitle]="false" 
+                            [label]="'HTML_TEXT' | translate"
+                            [renderTitle]="true" 
                             [renderEnlargeButton]="true"
                             [value]="richHtml" 
                             [rowSpan]="3" 
@@ -44,6 +45,7 @@
     </pep-button>
  </div> -->
  <div>
-    <pep-field-title [label]="'ONLOAD_FLOW' | translate"></pep-field-title>
+    <label class="body-xl bold ellipsis">{{'ONLOAD_FLOW' | translate}}</label>
+    <label class="body-sm">{{'FLOW_ONLOAD_DESC' | translate}}</label>
     <pep-flow-picker-button [flowHostObject]="flowHostObject" (flowChange)="onFlowChange($event)"></pep-flow-picker-button>
 </div>

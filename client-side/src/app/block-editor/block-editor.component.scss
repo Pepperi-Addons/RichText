@@ -8,13 +8,18 @@
     gap: 1rem;
     padding-top: 1rem;
 }
-pep-rich-html-textarea{
-    // border: 1px solid functions.get-pep-color(color-system-primary, color-base);
-    border-radius: variables.$border-radius-md;
-    padding:  0 variables.$spacing-sm variables.$spacing-sm;
-    background-color: functions.get-pep-color(color-weak, color-tran-30);
+ pep-rich-html-textarea{
+    //border: 1px solid functions.get-pep-color(color-system-primary, color-base);
+    
+   // padding:  0 variables.$spacing-sm variables.$spacing-sm;
+    //background-color: functions.get-pep-color(color-weak, color-tran-30);
     white-space: nowrap;
-}
+    ::ng-deep .mat-form-field-wrapper{
+        border-radius: variables.$border-radius-md;
+        background: functions.get-pep-color(color-weak, color-tran-30) !important;
+    }
+    
+ }
 
 .ql-editor{
     padding: 0 !important;
