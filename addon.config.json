@@ -22,7 +22,7 @@
       }
     ],
     "Dependencies": {
-      "pages": "1.0.49"
+      "pages": "1.0.50"
     },
     "CPISide": [
       "addon-cpi.ts"
