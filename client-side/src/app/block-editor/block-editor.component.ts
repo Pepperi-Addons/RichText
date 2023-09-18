@@ -4,6 +4,7 @@ import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loade
 import { MatDialogRef } from '@angular/material/dialog';
 import { RichTextService } from 'src/services/rich-text.service';
 import { RichText } from 'shared';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
     selector: 'page-block-editor',
@@ -36,15 +37,14 @@ export class BlockEditorComponent implements OnInit {
 
     dialogRef: MatDialogRef<any>;
 
-    richHtml = '';
+    richHtml: SafeHtml;
     htmlText = '';
     blockLoaded = false;
     flowHostObject;
 
     constructor(private translate: TranslateService,
-                private viewContainerRef: ViewContainerRef,
-                private richTextService: RichTextService,
-                private addonBlockLoaderService: PepAddonBlockLoaderService) {}
+                private sanitizer: DomSanitizer,
+                private richTextService: RichTextService) {}
 
     async ngOnInit(): Promise<void> {
 
@@ -53,7 +53,7 @@ export class BlockEditorComponent implements OnInit {
         }
 
         this.richHtml = this.configuration.RichText || '';
-
+        //this.richHtml = this.sanitizer.bypassSecurityTrustHtml(this.configuration?.RichText || '');
         // block loaded must be the last line in onInit function
         this.blockLoaded = true;
     }
@@ -102,6 +102,7 @@ export class BlockEditorComponent implements OnInit {
     }
 
     richTextChanged(event){
+        this.richHtml = event || '';
         this.onFieldChange('RichText',event);
     }
 

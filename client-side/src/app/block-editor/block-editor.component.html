@@ -21,7 +21,8 @@
                             [maxFieldCharacters]="300" 
                             [xAlignment]="'left'" 
                             [inlineMode]="false"
-                            (valueChange)="richTextChanged($event)">
+                            (valueChange)="richTextChanged($event)"
+                            [sanitize]="false">
     </pep-rich-html-textarea>
 </div>
 

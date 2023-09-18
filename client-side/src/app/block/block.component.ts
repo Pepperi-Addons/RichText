@@ -1,6 +1,7 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { IHostObject, RichText } from 'shared';
+import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
     selector: 'page-block',
@@ -24,17 +25,17 @@ export class BlockComponent implements OnInit {
         this._configuration = conf;
     }
 
-    public htmlStr = '';
+    public htmlStr: SafeHtml;
 
-    constructor(private translate: TranslateService) {
+    constructor(private translate: TranslateService, private sanitizer: DomSanitizer) {
     }
 
     ngOnInit(){
         // check if on load flow customized to this block
-        this.htmlStr = this.configuration?.RichText || '';
+        this.htmlStr = this.sanitizer.bypassSecurityTrustHtml(this.configuration?.RichText || '');
     }
 
     ngOnChanges(e: any): void {
-        this.htmlStr = this.configuration.RichText || '';
+        this.htmlStr = this.sanitizer.bypassSecurityTrustHtml(this.configuration?.RichText || '');
     }
 }
