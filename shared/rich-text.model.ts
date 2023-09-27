@@ -1,6 +1,9 @@
-import { AddonData } from "@pepperi-addons/papi-sdk";
+import { AddonData, Page } from "@pepperi-addons/papi-sdk";
+
 export declare type PepHorizontalAlignment = 'left' | 'center' | 'right';
 export declare type PepSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
+
+
 
 export interface IHostObject {
     configuration: RichText;
@@ -29,4 +32,11 @@ export class RichText  {
     OnLoadFlow: any = null;
     RichText: string = '';
     Structure: Structure = new Structure();
+}
+
+export interface IEditorHostObject {
+    state: any;
+    configuration: RichText;
+    pageConfiguration: any;
+    page: Page
 }

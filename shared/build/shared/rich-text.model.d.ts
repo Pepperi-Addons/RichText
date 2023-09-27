@@ -1,3 +1,4 @@
+import { Page } from "@pepperi-addons/papi-sdk";
 export declare type PepHorizontalAlignment = 'left' | 'center' | 'right';
 export declare type PepSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 export interface IHostObject {
@@ -19,4 +20,10 @@ export declare class RichText {
     OnLoadFlow: any;
     RichText: string;
     Structure: Structure;
+}
+export interface IEditorHostObject {
+    state: any;
+    configuration: RichText;
+    pageConfiguration: any;
+    page: Page;
 }

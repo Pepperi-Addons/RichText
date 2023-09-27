@@ -3,8 +3,10 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewContainerRef } from
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { MatDialogRef } from '@angular/material/dialog';
 import { RichTextService } from 'src/services/rich-text.service';
-import { RichText } from 'shared';
+import { IEditorHostObject, RichText } from 'shared';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
+import { FlowService } from 'src/services/flow.service';
+import { Page, PageConfiguration } from '@pepperi-addons/papi-sdk';
 
 @Component({
     selector: 'page-block-editor',
@@ -14,19 +16,28 @@ import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 export class BlockEditorComponent implements OnInit {
 
     @Input()
-    set hostObject(value: any) {
+    set hostObject(value: IEditorHostObject) {
         if (value && value.configuration && Object.keys(value.configuration).length > 0) {
             this._configuration = value.configuration ;
-            this.prepareFlowHostObject(); 
+            //prepare the flow host hobject
+            this.flowHostObject = this.flowService.prepareFlowHostObject(this.configuration?.OnLoadFlow || null); 
         } else {
             if(this.blockLoaded){
                 this.loadDefaultConfiguration();
             }
         }
+
+        this._page = value?.page;
+        this.flowService.recalculateEditorData(this._page, this._pageConfiguration);  
     }
 
     @Output() hostEvents: EventEmitter<any> = new EventEmitter<any>();
 
+    private _page: Page;
+    get page(): Page {
+        return this._page;
+    }
+    
     private _configuration: RichText;
     get configuration(): RichText {
         return this._configuration;
@@ -41,10 +52,12 @@ export class BlockEditorComponent implements OnInit {
     htmlText = '';
     blockLoaded = false;
     flowHostObject;
-
+    private _pageConfiguration: PageConfiguration;
+    
     constructor(private translate: TranslateService,
                 private sanitizer: DomSanitizer,
-                private richTextService: RichTextService) {}
+                private richTextService: RichTextService,
+                private flowService: FlowService) {}
 
     async ngOnInit(): Promise<void> {
 
@@ -65,7 +78,8 @@ export class BlockEditorComponent implements OnInit {
     private loadDefaultConfiguration() {
         this._configuration = this.getDefaultHostObject();
         this.updateHostObject();
-        this.prepareFlowHostObject();
+        //prepare the flow host hobject
+        this.flowHostObject = this.flowService.prepareFlowHostObject(this.configuration?.OnLoadFlow || null); 
     }
 
     private getDefaultHostObject(): RichText {
@@ -110,23 +124,5 @@ export class BlockEditorComponent implements OnInit {
         const base64Flow = btoa(JSON.stringify(flowData));
         this.configuration.OnLoadFlow = base64Flow;
         this.updateHostObject();
-    }
-
-
-    private prepareFlowHostObject() {
-        this.flowHostObject = {};
-        const runFlowData = this.configuration?.OnLoadFlow  ?  JSON.parse(atob(this.configuration.OnLoadFlow)) : null;
-        const fields = {};
-
-        if (runFlowData) {
-            this.richTextService.flowDynamicParameters.forEach((value, key) => {
-                fields[key] = {
-                    Type: value || 'String'
-                };
-            });
-        }
-        
-        this.flowHostObject['runFlowData'] = runFlowData?.FlowKey ? runFlowData : undefined;
-        this.flowHostObject['fields'] = fields;
     }
 }

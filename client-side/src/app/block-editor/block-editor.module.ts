@@ -12,7 +12,7 @@ import { PepTextboxModule } from '@pepperi-addons/ngx-lib/textbox';
 import { PepFieldTitleModule } from '@pepperi-addons/ngx-lib/field-title';
 import { PepFlowPickerButtonModule } from '@pepperi-addons/ngx-composite-lib/flow-picker-button';
 import { PepGroupButtonsSettingsModule } from '@pepperi-addons/ngx-composite-lib/group-buttons-settings';
-
+import { FlowService } from '../../services/flow.service';
 @NgModule({
     declarations: [BlockEditorComponent],
     imports: [
@@ -37,6 +37,7 @@ import { PepGroupButtonsSettingsModule } from '@pepperi-addons/ngx-composite-lib
     exports: [BlockEditorComponent],
     providers: [
         TranslateStore,
+        FlowService
         // Add here all used services.
     ]
 })
