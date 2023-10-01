@@ -22,13 +22,12 @@ export class FlowService {
             },
         };
 
-
         this.flowDynamicParameters.forEach((value, key) => {
             fields[key] = {
                 Type: value || 'String'
             };
         });
-        
+
         flowHostObject['runFlowData'] = runFlowData?.FlowKey ? runFlowData : undefined;
         flowHostObject['fields'] = fields;
 
