@@ -15,11 +15,12 @@ router.get('/test', (req, res) => {
 
 router.post('/on_block_load', async (req, res) => {
     let configuration = req?.body?.Configuration;
+    const state = req.body.State;
     // check if flow configured to on load --> run flow (instaed of onload event)
     if (configuration?.OnLoadFlow){
         const cpiService = new RichTextCPIService();
         //CALL TO FLOWS AND SET CONFIGURATION
-        const result: any = await cpiService.getOptionsFromFlow(configuration.OnLoadFlow || [], {configuration}, req.context);
+        const result: any = await cpiService.getOptionsFromFlow(configuration.OnLoadFlow || [], state, req.context, configuration);
         configuration = result?.configuration || configuration;
     }
     res.json({Configuration: configuration});
