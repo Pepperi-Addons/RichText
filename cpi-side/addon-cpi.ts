@@ -23,6 +23,6 @@ router.post('/on_block_load', async (req, res) => {
         const result: any = await cpiService.getOptionsFromFlow(configuration.OnLoadFlow || [], state, req.context, configuration);
         configuration = result?.configuration || configuration;
     }
-    
+
     res.json({Configuration: configuration});
 });
