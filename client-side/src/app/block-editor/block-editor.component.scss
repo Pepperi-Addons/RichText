@@ -21,6 +21,12 @@
     
  }
 
+ pep-flow-picker-button{
+    ::ng-deep.flow-button{
+        margin-bottom: variables.$spacing-lg;
+    }
+ }
+
 .ql-editor{
     padding: 0 !important;
 }

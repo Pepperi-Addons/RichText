@@ -2,6 +2,8 @@
 
 .richTextCont{
     display: grid;
+    grid-template-columns: 1fr;
+    
     .ql-editor{
         height: inherit;
         width: inherit;

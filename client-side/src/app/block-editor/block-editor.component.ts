@@ -62,7 +62,6 @@ export class BlockEditorComponent implements OnInit {
                 private flowService: FlowService) {}
 
     async ngOnInit(): Promise<void> {
-
         if (!this.configuration) {
             this.loadDefaultConfiguration();
         }

@@ -7,7 +7,7 @@
                 [value]="configuration?.Structure?.Height" (valueChange)="onFieldChange('Structure.Height',$event)">
     </pep-textbox>
 
-    <pep-textbox [label]="'MAX_WIDTH' | translate" type="string" [disabled]="configuration?.Structure?.FillHeight || false"
+    <pep-textbox [label]="'MAX_WIDTH' | translate" type="string"
                 [value]="configuration?.Structure?.MaxWidth" (valueChange)="onFieldChange('Structure.MaxWidth',$event)">
     </pep-textbox>
 </div>
@@ -28,7 +28,7 @@
 
 <pep-group-buttons-settings 
                     [groupType]="'sizes'" [subHeader]="'INNERPADDING_TITLE' | translate"
-                    [btnKey]="configuration?.Structure?.InnerPadding || 'sm'" [excludeKeys]="['xs','xl']"
+                    [btnKey]="configuration?.Structure?.InnerPadding || 'sm'" [excludeKeys]="['xs','xl','2xl']"
                     (btnkeyChange)="onFieldChange('Structure.InnerPadding',$event)">
 </pep-group-buttons-settings> 
 
