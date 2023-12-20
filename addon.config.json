@@ -22,7 +22,7 @@
       }
     ],
     "Dependencies": {
-      "pages": "1.0.50",
+      "pages": "2.0.96",
       "pepperi_pack": "1.0.1"
     },
     "CPISide": [
