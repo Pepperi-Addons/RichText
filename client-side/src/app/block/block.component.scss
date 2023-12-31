@@ -1,12 +1,14 @@
 @use '@pepperi-addons/ngx-lib/src/core/style/abstracts/variables' as ngx-variables;
 
 .richTextCont{
-    display: grid;
-    grid-template-columns: 1fr;
+    /*display: grid;
+    grid-template-columns: 1fr;*/
+    display: flex;
     
     .ql-editor{
         height: inherit;
         width: inherit;
+        padding: 0;
 
         ::ng-depp {
             img{
@@ -17,11 +19,14 @@
         }
     }
 
-    &.inner_padding_sm{
+    &.inner_padding_xs{
         padding: ngx-variables.$spacing-md;
     }
-    &.inner_padding_md{
+    &.inner_padding_sm{
         padding: ngx-variables.$spacing-lg;
+    }
+    &.inner_padding_md{
+        padding: ngx-variables.$spacing-2xl;
     }
     &.inner_padding_lg{
         padding: ngx-variables.$spacing-xl;

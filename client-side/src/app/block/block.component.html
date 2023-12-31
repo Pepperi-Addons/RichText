@@ -1,5 +1,5 @@
 <div class="richTextCont"
-     [ngStyle]="{'justify-content': configuration?.Structure?.Alignment?.Horizontal || 'start'}"
+     [ngStyle]="{'justify-content': configuration?.Structure?.Alignment?.Horizontal && configuration?.Structure?.MaxWidth !== '100' ? configuration?.Structure?.Alignment?.Horizontal : 'start'}"
      [ngClass]="['inner_padding_' + configuration?.Structure?.InnerPadding || 'sm']">
     <div class="ql-editor" 
         [innerHtml]="htmlStr || ''"

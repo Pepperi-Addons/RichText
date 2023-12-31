@@ -6,10 +6,6 @@
     <pep-textbox [label]="'HEIGHT' | translate" type="real" [disabled]="configuration?.Structure?.FillHeight || false"
                 [value]="configuration?.Structure?.Height" (valueChange)="onFieldChange('Structure.Height',$event)">
     </pep-textbox>
-
-    <pep-textbox [label]="'MAX_WIDTH' | translate" type="string"
-                [value]="configuration?.Structure?.MaxWidth" (valueChange)="onFieldChange('Structure.MaxWidth',$event)">
-    </pep-textbox>
 </div>
 <div class="ql-editor">
     <pep-rich-html-textarea [key]="'richText1'" 
@@ -28,15 +24,19 @@
 
 <pep-group-buttons-settings 
                     [groupType]="'sizes'" [subHeader]="'INNERPADDING_TITLE' | translate"
-                    [btnKey]="configuration?.Structure?.InnerPadding || 'sm'" [excludeKeys]="['xs','xl','2xl']"
+                    [btnKey]="configuration?.Structure?.InnerPadding || 'sm'" [excludeKeys]="['lg','xl','2xl']"
                     (btnkeyChange)="onFieldChange('Structure.InnerPadding',$event)">
 </pep-group-buttons-settings> 
-
-<!-- <pep-group-buttons-settings 
-[groupType]="'horizontal-align'" [subHeader]="'HORIZONTAL_ALIGN' | translate"
-[btnKey]="configuration?.Structure?.Alignment?.Horizontal"
-(btnkeyChange)="onFieldChange('Structure.Alignment.Horizontal',$event)">
-</pep-group-buttons-settings> -->
+<div>
+    <pep-textbox [label]="'MAX_WIDTH' | translate" type="string"
+    [value]="configuration?.Structure?.MaxWidth" (valueChange)="onFieldChange('Structure.MaxWidth',$event)">
+    </pep-textbox>
+    <pep-group-buttons-settings 
+    [groupType]="'horizontal-align'" [subHeader]="'CONTENT_POSITION' | translate"
+    [btnKey]="configuration?.Structure?.MaxWidth !== '100' ? configuration?.Structure?.Alignment?.Horizontal: 'unset'" [disabled]="configuration?.Structure?.MaxWidth == 100"
+    (btnkeyChange)="onFieldChange('Structure.Alignment.Horizontal',$event)">
+    </pep-group-buttons-settings>
+</div>
 <!-- <div>
     <label class="body-lg bold ellipsis">{{'ONLOAD_FLOW' | translate}}</label>
     <label class="body-xs normal">{{'FLOW_ONLOAD_DESC' | translate}}</label>
