@@ -18,7 +18,10 @@ export class BlockEditorComponent implements OnInit {
     @Input()
     set hostObject(value: IEditorHostObject) {
         if (value && value.configuration && Object.keys(value.configuration).length > 0) {
-            this._configuration = value.configuration ;
+            this._configuration = value.configuration;
+            if(value.configurationSource && Object.keys(value.configuration).length > 0){
+                this.configurationSource = value.configurationSource;
+            }
             //prepare the flow host hobject
             this.flowHostObject = this.flowService.prepareFlowHostObject(this.configuration?.OnLoadFlow || null); 
         } else {
@@ -40,6 +43,7 @@ export class BlockEditorComponent implements OnInit {
     }
     
     private defaultPageConfiguration: PageConfiguration = { "Parameters": []};
+    public configurationSource: RichText;
     private _configuration: RichText;
     get configuration(): RichText {
         return this._configuration;
@@ -103,16 +107,29 @@ export class BlockEditorComponent implements OnInit {
 
     onFieldChange(key, event){
         const value = event && event.source && event.source.key ? event.source.key : event && event.source && event.source.value ? event.source.value :  event;
-        
+
         if(key.indexOf('.') > -1){
             let keyObj = key.split('.');
-            this.configuration[keyObj[0]][keyObj[1]] = value;
+            this.configuration.Structure[keyObj[0]][keyObj[1]] = value;
+            //this.updateHostObject();
+            this.updateHostObjectField(`Structure.${key}`, value);
+            //this.configuration[keyObj[0]][keyObj[1]] = value;
         }
         else{
-            this.configuration[key] = value;
+            switch(key){
+                case 'RichText':
+                    this.configuration[key] = value;
+                    this.updateHostObjectField(`${key}`, value);
+                    break;
+                default:
+                    this.configuration.Structure[key] = value;
+                    this.updateHostObjectField(`Structure.${key}`, value);
+                    break;
+            }
         }
-  
-        this.updateHostObjectField(`${key}`, value);
+        
+       // this.updateHostObjectField(`Structure.${key}`, value);
+
     }
 
     richTextChanged(event){

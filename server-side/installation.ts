@@ -22,7 +22,7 @@ export async function install(client: Client, request: Request): Promise<AddonAP
         const service = new RelationsService(client);
         await service.upsertRelations();
     } catch (err) {
-        throw new Error(`Failed to create relations. error - ${err}`);
+        throw new Error(`Install Failed on upsert relations. error - ${err}`);
     }
 
     return { success: true, resultObject: {} };
@@ -33,6 +33,13 @@ export async function uninstall(client: Client, request: Request): Promise<Addon
 }
 
 export async function upgrade(client: Client, request: Request): Promise<AddonAPISyncResult> {
+    try {
+        const service = new RelationsService(client);
+        await service.upsertRelations();
+    }
+    catch (err) {
+        throw new Error(`Upgrade Failed on upsert relations. error - ${err}`);
+    }
     return {success: true, resultObject: {}}
 }
 

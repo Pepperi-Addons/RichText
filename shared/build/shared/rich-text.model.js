@@ -1,6 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
-exports.RichText = exports.Alignment = exports.Structure = void 0;
+exports.RichText = exports.Alignment = exports.Structure = exports.Columns = void 0;
+class Columns {
+    constructor() {
+        this.Columns = '1';
+        this.ColumnGap = 'xs';
+    }
+}
+exports.Columns = Columns;
 class Structure {
     constructor() {
         this.FillHeight = false;
@@ -9,6 +16,7 @@ class Structure {
         this.padding = 0;
         this.InnerPadding = "md";
         this.Alignment = new Alignment();
+        this.Columns = new Columns();
     }
 }
 exports.Structure = Structure;

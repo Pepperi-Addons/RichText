@@ -5,6 +5,53 @@ export class RelationsService {
 
     papiClient: PapiClient
     bundleFileName = '';
+    screenSizesSchema = {
+            "Fields": {
+                "Structure": {
+                        "Type": "Object",
+                        "Fields": {
+                            "Height": {
+                                "Type": "Integer",
+                                "ConfigurationPerScreenSize": true
+                            },
+                            "MaxWidth": {
+                                "Type": "Integer",
+                                "ConfigurationPerScreenSize": true
+                            },
+                            "padding": {
+                                "Type": "Integer",
+                                "ConfigurationPerScreenSize": true
+                            },
+                            "InnerPadding": {
+                                "Type": "String",
+                                "ConfigurationPerScreenSize": true
+                            },
+                            "Alignment": {
+                                "Type": "Object",
+                                "Fields": {
+                                    "Horizontal": {
+                                        "Type": "String",
+                                         "ConfigurationPerScreenSize": true
+                                    }
+                                }
+                            },
+                            "Columns": {
+                                "Type": "Object",
+                                "Fields": {
+                                    "Columns": {
+                                        "Type": "Integer",
+                                         "ConfigurationPerScreenSize": true
+                                    },
+                                    "ColumnGap": {
+                                        "Type": "String",
+                                         "ConfigurationPerScreenSize": true
+                                    }
+                                }
+                            }
+                        }
+                }
+            }
+    }
 
     constructor(private client: Client) {
         this.papiClient = new PapiClient({
@@ -77,7 +124,9 @@ export class RelationsService {
                 EditorComponentName: `${blockName}EditorComponent`, // This is should be the block editor component name (from the client-side)
                 EditorModuleName: `${blockName}EditorModule`, // This is should be the block editor module name (from the client-side)}
                 EditorElementName: `${blockName.toLocaleLowerCase()}-editor-element-${this.client.AddonUUID}`,
-                BlockLoadEndpoint: "/addon-cpi/on_block_load"
+                Schema: this.screenSizesSchema,
+                BlockLoadEndpoint: "/addon-cpi/on_block_load",
+                BlockStateChangeEndpoint: '/addon-cpi/on_block_state_change'
         }
         return await this.upsertRelation(blockRelation);
     }

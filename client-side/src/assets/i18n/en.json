@@ -3,11 +3,13 @@
     "FILL_HEIGHT_SECTION_DESCRIPTION": "Set Fill Height on to make the view to fill the section height",
     "HEIGHT": "Height (rem)",
     "MAX_WIDTH": "Content max width (%)",
-    "HTML_TEXT": "Html text",
+    "HTML_TEXT": "HTML Text",
     "ONLOAD_FLOW": "On load flow",
     "CHOOSE_FLOW": "Flow",
     "FLOW_ONLOAD_DESC": "Choose the flow you want to activate in On Load Event",
     "CONTENT_POSITION": "Content position",
-    "INNERPADDING_TITLE": "Inner padding"
+    "INNERPADDING_TITLE": "Inner padding",
+    "COLUMNS_COLUMNS": "Columns",
+    "COLUMNS_GAP": "Columns gap"
 }
 

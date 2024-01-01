@@ -5,6 +5,11 @@ export declare type PepSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
 
 
+export class Columns {
+    Columns: string = '1';
+    ColumnGap: PepSizeType = 'xs';  
+}
+
 export interface IHostObject {
     configuration: RichText;
     // pageConfiguration?: PageConfiguration;
@@ -20,6 +25,7 @@ export class Structure {
     padding: number = 0;
     InnerPadding: PepSizeType = "md";
     Alignment: Alignment = new Alignment();
+    Columns: Columns = new Columns();
 
 }
 
@@ -37,6 +43,7 @@ export class RichText  {
 export interface IEditorHostObject {
     state: any;
     configuration: RichText;
+    configurationSource: RichText;
     pageConfiguration: any;
     page: Page
 }

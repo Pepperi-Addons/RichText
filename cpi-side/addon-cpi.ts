@@ -14,15 +14,35 @@ router.get('/test', (req, res) => {
 })
 
 router.post('/on_block_load', async (req, res) => {
-    let configuration = req?.body?.Configuration;
+    const configuration = req?.body?.Configuration;
+    let configurationRes = configuration;
     const state = req.body.State;
     // check if flow configured to on load --> run flow (instaed of onload event)
     if (configuration?.OnLoadFlow){
-        const cpiService = new RichTextCPIService();
-        //CALL TO FLOWS AND SET CONFIGURATION
-        const result: any = await cpiService.getOptionsFromFlow(configuration.OnLoadFlow || [], state, req.context, configuration);
-        configuration = result?.configuration || configuration;
+        try {
+            const cpiService = new RichTextCPIService();
+            //CALL TO FLOWS AND SET CONFIGURATION
+            const result: any = await cpiService.getOptionsFromFlow(configuration.OnLoadFlow || [], state, req.context, configuration);
+            configurationRes = result?.configuration || configuration;
+        }
+        catch (err){
+            configurationRes = configuration;
+        }
     }
+    res.json({
+        State: state,
+        Configuration: configurationRes,
+    });
+});
 
-    res.json({Configuration: configuration});
+router.post('/on_block_state_change', async (req, res) => {
+    const state = req.body.State || {};
+    const changes = req.body.Changes || {};
+    //const configuration = req.body.Configuration;
+
+    const mergeState = {...state, ...changes};
+    res.json({
+        State: mergeState,
+        Configuration: changes,
+    });
 });

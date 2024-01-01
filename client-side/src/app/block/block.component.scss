@@ -3,7 +3,7 @@
 .richTextCont{
     /*display: grid;
     grid-template-columns: 1fr;*/
-    display: flex;
+    display: grid;
     
     .ql-editor{
         height: inherit;
@@ -16,6 +16,18 @@
                 max-height: 100% !important;
                 max-width: 100% !important;
             }
+        }
+        &.column-gap_xs{
+            column-gap: ngx-variables.$spacing-xs;
+        }
+        &.column-gap_sm{
+            column-gap: ngx-variables.$spacing-sm;
+        }
+        &.column-gap_md{
+            column-gap: ngx-variables.$spacing-lg;
+        }
+        &.column-gap_lg{
+            column-gap: ngx-variables.$spacing-2xl;
         }
     }
 
