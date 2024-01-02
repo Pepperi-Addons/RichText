@@ -46,7 +46,8 @@
     [hideReset]="configuration?.Structure?.Alignment?.Horizontal === configurationSource?.Structure?.Alignment?.Horizontal"  
     [resetHostEvents]="hostEvents" 
     [groupType]="'horizontal-align'" [subHeader]="'CONTENT_POSITION' | translate"
-    [btnKey]="configuration?.Structure?.MaxWidth !== '100' ? configuration?.Structure?.Alignment?.Horizontal: 'unset'" [disabled]="configuration?.Structure?.MaxWidth == 100"
+    [btnKey]="configuration?.Structure?.MaxWidth !== '100' ? configuration?.Structure?.Alignment?.Horizontal: 'unset'" 
+    [disabled]="configuration?.Structure?.MaxWidth == 100"
     (btnkeyChange)="onFieldChange('Alignment.Horizontal',$event)">
     </pep-group-buttons-settings>
 </div>
@@ -68,19 +69,14 @@
                     pepResetConfigurationField="Structure.Columns.ColumnGap" 
                     [hideReset]="configuration?.Structure?.Columns?.ColumnGap === configurationSource?.Structure?.Columns?.ColumnGap"  
                     [resetHostEvents]="hostEvents" 
-                    [groupType]="'sizes'" [subHeader]="'COLUMNS_GAP' | translate" [useNone]="false"
-                    [btnKey]="configuration?.Structure?.Columns.ColumnGap || 'xs'" [excludeKeys]="['xl','2xl']"
+                    [groupType]="'sizes'" [subHeader]="'COLUMNS_GAP' | translate" 
+                    [useNone]="false"
+                    [disabled]="configuration?.Structure?.Columns?.Columns == 1"
+                    [btnKey]="configuration?.Structure?.Columns?.Columns === 1 ? 'unset' : configuration?.Structure?.Columns.ColumnGap || 'xs'" 
+                    [excludeKeys]="['xl','2xl']"
                     (btnkeyChange)="onFieldChange('Columns.ColumnGap',$event)">
 </pep-group-buttons-settings> 
 </div>
-<!-- <div>
-    <label class="body-lg bold ellipsis">{{'ONLOAD_FLOW' | translate}}</label>
-    <label class="body-xs normal">{{'FLOW_ONLOAD_DESC' | translate}}</label>
-    <pep-button class="script-button" 
-                [value]="onLoadFlowName ? onLoadFlowName : ('ONLOAD_FLOW' | translate)" 
-                (buttonClick)="openFlowPickerDialog()">
-    </pep-button>
- </div> -->
  <div>
     <label class="body-xl bold ellipsis">{{'ONLOAD_FLOW' | translate}}</label>
     <label class="body-sm">{{'FLOW_ONLOAD_DESC' | translate}}</label>

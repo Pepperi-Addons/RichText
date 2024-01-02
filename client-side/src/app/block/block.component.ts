@@ -49,7 +49,7 @@ export class BlockComponent implements OnInit {
         else if(data?.configuration){
             //this.configuration = data.configuration;
             this.mergeConfiguration(data.configuration);
-        }   
+        }
     }
 
     private mergeConfiguration(newConfiguration){
@@ -59,6 +59,8 @@ export class BlockComponent implements OnInit {
             //update configuration with the object from new object
             this.configuration[prop] = newConfiguration[prop]; 
         }
+
+        this.htmlStr = this.sanitizer.bypassSecurityTrustHtml(this.configuration?.RichText || '');
     }
 
     ngOnChanges(e: any): void {
