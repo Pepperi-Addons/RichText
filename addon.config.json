@@ -1,6 +1,6 @@
 {
   "AddonUUID": "3864cd44-b388-41c5-8af9-ec200f72b3f3",
-  "AddonVersion": "1.0.24",
+  "AddonVersion": "1.0.25",
   "DebugPort": 4500,
   "WebappBaseUrl": "https://app.sandbox.pepperi.com",
   "DefaultEditor": "main",
@@ -53,7 +53,8 @@
       "ngx-quill": "12",
       "ngx-signaturepad": "0",
       "ngx-virtual-scroller": "4",
-      "quill": "1"
+      "quill": "1",
+      "rxjs": "7"
     }
   }
 }
