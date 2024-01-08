@@ -23,7 +23,7 @@
     ],
     "Dependencies": {
       "pages": "1.0.50",
-      "pepperi_pack": "1.1.5"
+      "pepperi_pack": "1.1.6"
     },
     "CPISide": [
       "addon-cpi.ts"
@@ -53,7 +53,8 @@
       "ngx-quill": "12",
       "ngx-signaturepad": "0",
       "ngx-virtual-scroller": "4",
-      "quill": "1"
+      "quill": "1",
+      "rxjs": "7"
     }
   }
 }
