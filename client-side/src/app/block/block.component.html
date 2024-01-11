@@ -4,7 +4,7 @@
     <div class="ql-editor" 
         [innerHtml]="htmlStr || ''"
         [ngStyle]="{'height': configuration?.Structure?.FillHeight ? '100%' : (configuration?.Structure?.Height + 'rem'),
-                    'max-width': (configuration?.Structure?.MaxWidth + '%') || '100%',
+                    'width': (configuration?.Structure?.MaxWidth + '%') || '100%',
                     'column-count': configuration?.Structure?.Columns?.Columns || 1,
                     'justify-self': configuration?.Structure?.Alignment?.Horizontal && configuration?.Structure?.MaxWidth !== '100' ? configuration?.Structure?.Alignment?.Horizontal : 'start'}"
         [ngClass]="['column-gap_' + configuration?.Structure?.Columns?.ColumnGap]">
