@@ -1,5 +1,5 @@
 <div class="ql-editor">
-    <pep-rich-html-textarea [key]="'richText1'" 
+    <!-- <pep-rich-html-textarea [key]="'richText1'" 
                             [label]="'HTML_TEXT' | translate"
                             [renderTitle]="true" 
                             [renderEnlargeButton]="true"
@@ -10,7 +10,20 @@
                             [inlineMode]="false"
                             (valueChange)="richTextChanged($event)"
                             [sanitize]="false">
-    </pep-rich-html-textarea>
+    </pep-rich-html-textarea> -->
+    <pep-rich-text 
+        [key]="'richText1'" 
+        [label]="'HTML_TEXT' | translate"
+        [renderTitle]="true" 
+        [renderEnlargeButton]="true"
+        [value]="richHtml" 
+        [rowSpan]="3" 
+        [maxFieldCharacters]="300" 
+        [xAlignment]="'left'" 
+        [inlineMode]="false"
+        (valueChange)="richTextChanged($event)"
+        [sanitize]="false">
+    </pep-rich-text>
 </div>
 <div>
     <pep-checkbox class="checkbox-as-title" [value]="configuration?.Structure?.FillHeight || false" [label]="'FILL_HEIGHT_SECTION_TITLE' | translate" [renderTitle]="false" (valueChange)="onFieldChange('FillHeight',$event)"></pep-checkbox>

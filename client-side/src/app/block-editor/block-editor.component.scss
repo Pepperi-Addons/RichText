@@ -8,7 +8,7 @@
     gap: 1rem;
     padding-top: 1rem;
 }
- pep-rich-html-textarea{
+pep-rich-text{
     //border: 1px solid functions.get-pep-color(color-system-primary, color-base);
     
    // padding:  0 variables.$spacing-sm variables.$spacing-sm;
@@ -17,6 +17,10 @@
     ::ng-deep .mat-form-field-wrapper{
         border-radius: variables.$border-radius-md;
         background: functions.get-pep-color(color-weak, color-tran-30) !important;
+    }
+
+    ::ng-deep .quill-editor-image-btn{
+        display: none;
     }
     
  }

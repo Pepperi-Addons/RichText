@@ -6,7 +6,7 @@ import { BlockEditorComponent } from './index';
 import { PepTextareaModule } from '@pepperi-addons/ngx-lib/textarea';
 import { config } from '../app.config';
 import { PepButtonModule } from '@pepperi-addons/ngx-lib/button';
-import { PepRichHtmlTextareaModule } from '@pepperi-addons/ngx-lib/rich-html-textarea';
+import { PepRichTextModule } from '@pepperi-addons/ngx-composite-lib/rich-text';
 import { PepCheckboxModule } from '@pepperi-addons/ngx-lib/checkbox';
 import { PepSliderModule } from '@pepperi-addons/ngx-lib/slider';
 import { PepNgxCompositeLibModule } from '@pepperi-addons/ngx-composite-lib';
@@ -25,7 +25,7 @@ import { FlowService } from '../../services/flow.service';
         PepFieldTitleModule,
         PepNgxCompositeLibModule,
         PepGroupButtonsSettingsModule,
-        PepRichHtmlTextareaModule,
+        PepRichTextModule,
         PepTextareaModule,
         PepCheckboxModule,
         PepSliderModule,

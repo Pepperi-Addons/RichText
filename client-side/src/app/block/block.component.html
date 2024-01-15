@@ -5,7 +5,7 @@
         [innerHtml]="htmlStr || ''"
         [ngStyle]="{'height': configuration?.Structure?.FillHeight ? '100%' : (configuration?.Structure?.Height + 'rem'),
                     'width': (configuration?.Structure?.MaxWidth + '%') || '100%',
-                    'column-count': configuration?.Structure?.Columns?.Columns || 1,
+                    'column-count': configuration?.Structure?.Columns?.Columns > 1 ?  configuration?.Structure?.Columns?.Columns : 'unset',
                     'justify-self': configuration?.Structure?.Alignment?.Horizontal && configuration?.Structure?.MaxWidth !== '100' ? configuration?.Structure?.Alignment?.Horizontal : 'start'}"
         [ngClass]="['column-gap_' + configuration?.Structure?.Columns?.ColumnGap]">
     </div>
