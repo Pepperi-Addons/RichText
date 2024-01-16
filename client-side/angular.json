@@ -41,7 +41,7 @@
                                 "output": "./assets/ngx-composite-lib"
                             }
                         ],
-                        "commonChunk": false,
+                        "commonChunk": true,
                         "extraWebpackConfig": "webpack.config.js"
                     },
                     "configurations": {
@@ -73,8 +73,8 @@
                 "serve": {
                     "builder": "ngx-build-plus:dev-server",
                     "options": {
-						"port": 4400,
-						"publicHost": "http://localhost:4400",
+						"port": 4402,
+						"publicHost": "http://localhost:4402",
 						"extraWebpackConfig": "webpack.config.js"
 					},
                     "configurations": {

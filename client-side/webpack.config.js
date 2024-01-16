@@ -10,13 +10,19 @@ const webpackConfig = withModuleFederationPlugin({
     },
     shared: {
         ...shareAll({ strictVersion: true, requiredVersion: 'auto' }),
-    }
+    },
 });
 
 module.exports = {
     ...webpackConfig,
     output: {
         ...webpackConfig.output,
+        // chunkLoadingGlobal: blockName,
         uniqueName: blockName,
+        // assetModuleFilename: 'assets',
     },
+    // experiments: {
+    //     ...webpackConfig.experiments,
+    //     lazyCompilation: true,
+    // },
 };
