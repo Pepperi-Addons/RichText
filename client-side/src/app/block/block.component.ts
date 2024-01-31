@@ -1,6 +1,6 @@
 import { TranslateService } from '@ngx-translate/core';
 import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
-import { IHostObject, RichText } from 'shared';
+import { Columns, IHostObject, RichText } from 'shared';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 
 @Component({
@@ -38,6 +38,7 @@ export class BlockComponent implements OnInit {
             action: 'register-state-change',
             callback: this.registerStateChange.bind(this)
         });
+        
         // check if on load flow customized to this block
         this.htmlStr = this.sanitizer.bypassSecurityTrustHtml(this.configuration?.RichText || '');
     }

@@ -3,7 +3,7 @@ import { Component, EventEmitter, Input, OnInit, Output, ViewContainerRef } from
 import { PepAddonBlockLoaderService } from '@pepperi-addons/ngx-lib/remote-loader';
 import { MatDialogRef } from '@angular/material/dialog';
 import { RichTextService } from 'src/services/rich-text.service';
-import { IEditorHostObject, RichText } from 'shared';
+import { Columns, IEditorHostObject, RichText } from 'shared';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FlowService } from 'src/services/flow.service';
 import { Page, PageConfiguration } from '@pepperi-addons/papi-sdk';
@@ -19,9 +19,12 @@ export class BlockEditorComponent implements OnInit {
     set hostObject(value: IEditorHostObject) {
         if (value && value.configuration && Object.keys(value.configuration).length > 0) {
             this._configuration = value.configuration;
+            
             if(value.configurationSource && Object.keys(value.configuration).length > 0){
                 this.configurationSource = value.configurationSource;
             }
+
+            this.supportOldVersionBlock();
             //prepare the flow host hobject
             this.flowHostObject = this.flowService.prepareFlowHostObject(this.configuration?.OnLoadFlow || null); 
         } else {
@@ -84,6 +87,16 @@ export class BlockEditorComponent implements OnInit {
         this._configuration = this.getDefaultHostObject();
         this.updateHostObject();
         this.flowHostObject = this.flowService.prepareFlowHostObject(this.configuration?.OnLoadFlow || null); 
+    }
+
+    private supportOldVersionBlock(){
+        //the old version don't have columns and new other prop
+        if(!this.configurationSource?.Structure?.Columns?.Columns){
+            this.configurationSource.Structure['Columns'] = new Columns();
+        }
+        if(!this._configuration?.Structure?.Columns?.Columns){
+            this._configuration.Structure['Columns'] = new Columns();
+        }  
     }
 
     private getDefaultHostObject(): RichText {
