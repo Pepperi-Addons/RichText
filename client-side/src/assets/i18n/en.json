@@ -7,6 +7,16 @@
     "ONLOAD_FLOW": "On load flow",
     "CHOOSE_FLOW": "Flow",
     "FLOW_ONLOAD_DESC": "Choose the flow you want to activate in On Load Event",
+    "INPUT_TYPE":{
+        "TITLE": "Input type",
+        "FILE": "File",
+        "TEXT": "Text",
+        "RICH": "Rich"
+    },
+    "TEXT_CONTENT": "Text content",
+    "FILE_CONTENT": "File content",
+    "HTML_FILE": "Html file",
+    "CHOOSE_ASSET": "Choose asset",
     "CONTENT_POSITION": "Content position",
     "INNERPADDING_TITLE": "Inner padding",
     "COLUMNS_COLUMNS": "Columns",

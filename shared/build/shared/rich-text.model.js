@@ -17,6 +17,7 @@ class Structure {
         this.InnerPadding = "md";
         this.Alignment = new Alignment();
         this.Columns = new Columns();
+        this.InputType = 'rich';
     }
 }
 exports.Structure = Structure;

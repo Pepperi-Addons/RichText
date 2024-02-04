@@ -1,5 +1,6 @@
 import { AddonData, Page } from "@pepperi-addons/papi-sdk";
 
+export declare type InputType = 'rich' | 'text' | 'file';
 export declare type PepHorizontalAlignment = 'left' | 'center' | 'right';
 export declare type PepSizeType = 'xs' | 'sm' | 'md' | 'lg' | 'xl';
 
@@ -26,6 +27,7 @@ export class Structure {
     InnerPadding: PepSizeType = "md";
     Alignment: Alignment = new Alignment();
     Columns: Columns = new Columns();
+    InputType: InputType = 'rich';
 
 }
 

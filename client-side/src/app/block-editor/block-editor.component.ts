@@ -7,6 +7,7 @@ import { Columns, IEditorHostObject, RichText } from 'shared';
 import { DomSanitizer, SafeHtml } from '@angular/platform-browser';
 import { FlowService } from 'src/services/flow.service';
 import { Page, PageConfiguration } from '@pepperi-addons/papi-sdk';
+import { PepButton } from '@pepperi-addons/ngx-lib/button';
 
 @Component({
     selector: 'page-block-editor',
@@ -59,6 +60,7 @@ export class BlockEditorComponent implements OnInit {
 
     richHtml: SafeHtml;
     htmlText = '';
+    inputTypes: Array<PepButton> = [];
     blockLoaded = false;
     flowHostObject;
     private _pageConfiguration: PageConfiguration;
@@ -66,7 +68,9 @@ export class BlockEditorComponent implements OnInit {
     constructor(private translate: TranslateService,
                 private sanitizer: DomSanitizer,
                 private richTextService: RichTextService,
-                private flowService: FlowService) {}
+                private flowService: FlowService,
+                private viewContainerRef: ViewContainerRef,
+                private addonBlockLoaderService: PepAddonBlockLoaderService) {}
 
     async ngOnInit(): Promise<void> {
         if (!this.configuration) {
@@ -74,6 +78,12 @@ export class BlockEditorComponent implements OnInit {
         }
 
         this.richHtml = this.configuration.RichText || '';
+
+        this.inputTypes = [
+            { key: 'rich', value: this.translate.instant('INPUT_TYPE.RICH'), callback: (event: any) => this.onFieldChange('InputType',event) },
+            { key: 'text', value: this.translate.instant('INPUT_TYPE.TEXT'), callback: (event: any) => this.onFieldChange('InputType',event) },
+            { key: 'file', value: this.translate.instant('INPUT_TYPE.FILE'), callback: (event: any) => this.onFieldChange('InputType',event) }
+        ]
         //this.richHtml = this.sanitizer.bypassSecurityTrustHtml(this.configuration?.RichText || '');
         // block loaded must be the last line in onInit function
         this.blockLoaded = true;
@@ -96,7 +106,24 @@ export class BlockEditorComponent implements OnInit {
         }
         if(!this._configuration?.Structure?.Columns?.Columns){
             this._configuration.Structure['Columns'] = new Columns();
-        }  
+        } 
+        if(!this._configuration?.Structure?.InputType){
+            this._configuration.Structure['InputType'] = 'rich';
+        } 
+         
+    }
+
+    onInputTypeChange(key, event){
+        const value = event && event.source && event.source.key ? event.source.key : event && event.source && event.source.value ? event.source.value :  event;
+        if(key.indexOf('.') > -1){
+            let keyObj = key.split('.');
+           // this.configuration.Slides[this.id][keyObj[0]][keyObj[1]] = value;
+        }
+        else{
+           // this.configuration.Slides[this.id][key] = value;
+        }
+
+       // this.updateHostObjectField(`Slides[${this.id}].${key}`, value);
     }
 
     private getDefaultHostObject(): RichText {
@@ -150,7 +177,45 @@ export class BlockEditorComponent implements OnInit {
         this.onFieldChange('RichText',event);
     }
 
+    onOpenAssetsDialog() {
+            this.dialogRef = this.addonBlockLoaderService.loadAddonBlockInDialog({
+                container: this.viewContainerRef,
+                name: 'AssetPicker',
+                hostObject: {
+                    selectionType: 'single',
+                    allowedAssetsTypes: 'documents',
+                    inDialog: true
+                },
+                hostEventsCallback: (event) => { this.onHostEvents(event); }
+            });
 
+    }
+
+    onHostEvents(event: any) {
+        const self = this;
+        var filetxt = '';
+        var txtFile = new XMLHttpRequest();
+        txtFile.open("GET", event.url, true);
+        txtFile.onreadystatechange = function() {
+        if (txtFile.readyState === 4) {  // Makes sure the document is ready to parse.
+            if (txtFile.status === 200) {  // Makes sure it's found the file.
+                self.richHtml = self.configuration.RichText = txtFile.responseText; 
+                
+                self.updateHostObjectField('RichText', txtFile.responseText);
+                
+            //lines = txtFile.responseText.split("\n"); // Will separate each line into an array
+            //var customTextElement = document.getElementById('textHolder');
+            //customTextElement.innerHTML = txtFile.responseText;
+            }
+        }
+    }
+    txtFile.send(null);
+            this.hostEvents.emit(event);
+
+            if (this.dialogRef) {
+                this.dialogRef.close(null);
+            }
+    }
     /***************   FLOW AND CONSUMER PARAMETERS START   ********************************/
     onFlowChange(flowData: any) {
         const base64Flow = btoa(JSON.stringify(flowData));

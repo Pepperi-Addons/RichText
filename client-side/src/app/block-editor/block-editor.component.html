@@ -1,21 +1,35 @@
+<pep-group-buttons-settings
+    [groupType]="'custom'" 
+    [btnsArray]="inputTypes"
+    [subHeader]="'INPUT_TYPE.TITLE' | translate"
+    [btnKey]="configuration?.Structure?.InputType || 'rich'" >
+</pep-group-buttons-settings>
+
+<div>
+    <label class="body-xs normal ellipsis">{{'HTML_FILE' | translate}}</label>
+    <pep-button sizeType="md" [styleType]="'regular'" 
+                [value]="'CHOOSE_ASSET' | translate"  
+                iconName="system_file_upload_cloud"
+                [disabled]="configuration?.Structure?.InputType !== 'file'"
+                (click)="onOpenAssetsDialog();">
+    </pep-button>
+</div>
+
 <div class="ql-editor">
-    <!-- <pep-rich-html-textarea [key]="'richText1'" 
-                            [label]="'HTML_TEXT' | translate"
-                            [renderTitle]="true" 
-                            [renderEnlargeButton]="true"
-                            [value]="richHtml" 
-                            [rowSpan]="3" 
-                            [maxFieldCharacters]="300" 
-                            [xAlignment]="'left'" 
-                            [inlineMode]="false"
-                            (valueChange)="richTextChanged($event)"
-                            [sanitize]="false">
-    </pep-rich-html-textarea> -->
-    <pep-rich-text 
+    <pep-textarea *ngIf="configuration?.Structure?.InputType !== 'rich'"
+        [value]="richHtml" 
+        [label]="(configuration?.Structure?.InputType == 'text' ? 'TEXT_CONTENT' : 'FILE_CONTENT') | translate"
+        [rowSpan]="3" 
+        [disabled]="configuration?.Structure?.InputType === 'file'"
+        (valueChange)="richTextChanged($event)">
+    </pep-textarea>
+
+    <pep-rich-text
+        *ngIf="configuration?.Structure?.InputType === 'rich'"
         [key]="'richText1'" 
         [label]="'HTML_TEXT' | translate"
         [renderTitle]="true" 
-        [renderEnlargeButton]="true"
+        [renderEnlargeButton]="configuration?.Structure?.InputType === 'rich'"
         [value]="richHtml" 
         [rowSpan]="3" 
         [maxFieldCharacters]="300" 

@@ -23,8 +23,14 @@ pep-rich-text{
 
     ::ng-deep .quill-editor-image-btn{
         display: none;
+    }   
+ }
+
+ pep-textarea{
+    ::ng-deep pep-textbox-icon{
+        display:none;
     }
-    
+   
  }
 
  pep-flow-picker-button{
