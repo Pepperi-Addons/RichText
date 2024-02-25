@@ -1,85 +1,82 @@
-<pep-group-buttons-settings
-    [groupType]="'custom'" 
-    [btnsArray]="inputTypes"
-    [subHeader]="'INPUT_TYPE.TITLE' | translate"
-    [btnKey]="configuration?.Structure?.InputType || 'rich'" >
-</pep-group-buttons-settings>
-
-<div>
-    <label class="body-xs normal ellipsis">{{'HTML_FILE' | translate}}</label>
-    <pep-button sizeType="md" [styleType]="'regular'" 
-                [value]="'CHOOSE_ASSET' | translate"  
-                iconName="system_file_upload_cloud"
-                [disabled]="configuration?.Structure?.InputType !== 'file'"
-                (click)="onOpenAssetsDialog();">
-    </pep-button>
-</div>
-
-<div class="ql-editor">
-    <pep-textarea *ngIf="configuration?.Structure?.InputType !== 'rich'"
-        [value]="richHtml" 
-        [label]="(configuration?.Structure?.InputType == 'text' ? 'TEXT_CONTENT' : 'FILE_CONTENT') | translate"
-        [rowSpan]="3" 
-        [disabled]="configuration?.Structure?.InputType === 'file'"
-        (valueChange)="richTextChanged($event)">
-    </pep-textarea>
-
-    <pep-rich-text
-        *ngIf="configuration?.Structure?.InputType === 'rich'"
-        [key]="'richText1'" 
-        [label]="'HTML_TEXT' | translate"
-        [renderTitle]="true" 
-        [renderEnlargeButton]="configuration?.Structure?.InputType === 'rich'"
-        [value]="richHtml" 
-        [rowSpan]="3" 
-        [maxFieldCharacters]="300" 
-        [xAlignment]="'left'" 
-        [inlineMode]="false"
-        (valueChange)="richTextChanged($event)"
-        [sanitize]="false">
-    </pep-rich-text>
-</div>
-<div>
-    <pep-checkbox class="checkbox-as-title" [value]="configuration?.Structure?.FillHeight || false" [label]="'FILL_HEIGHT_SECTION_TITLE' | translate" [renderTitle]="false" (valueChange)="onFieldChange('FillHeight',$event)"></pep-checkbox>
-    <span class="header-title body-xs checkbox-description">{{('FILL_HEIGHT_SECTION_DESCRIPTION' | translate)}}</span>
-</div>
-<div>
-    <pep-textbox pepResetConfigurationField="Structure.Height" 
-                 [hideReset]="configuration?.Structure?.Height === configurationSource?.Structure?.Height"  
-                 [resetHostEvents]="hostEvents" 
-    [label]="'HEIGHT' | translate" type="real" [disabled]="configuration?.Structure?.FillHeight || false"
-                [value]="configuration?.Structure?.Height" (valueChange)="onFieldChange('Height',$event)">
-    </pep-textbox>
-</div>
-
-<pep-group-buttons-settings
-                    pepResetConfigurationField="Structure.InnerPadding" 
-                    [hideReset]="configuration?.Structure?.InnerPadding === configurationSource?.Structure?.InnerPadding"  
-                    [resetHostEvents]="hostEvents" 
-                    [groupType]="'sizes'" [subHeader]="'INNERPADDING_TITLE' | translate" [useNone]="true"
-                    [btnKey]="configuration?.Structure?.InnerPadding || 'sm'" [excludeKeys]="['lg','xl','2xl']"
-                    (btnkeyChange)="onFieldChange('InnerPadding',$event)">
-</pep-group-buttons-settings> 
-<div>
-    <pep-textbox
-        pepResetConfigurationField="Structure.MaxWidth" 
-        [hideReset]="configuration?.Structure?.MaxWidth === configurationSource?.Structure?.MaxWidth"  
-        [resetHostEvents]="hostEvents" 
-        [label]="'MAX_WIDTH' | translate" type="string"
-        [value]="configuration?.Structure?.MaxWidth" (valueChange)="onFieldChange('MaxWidth',$event)">
-    </pep-textbox>
-<pep-group-buttons-settings
-    pepResetConfigurationField="Structure.Alignment.Horizontal" 
-    [hideReset]="configuration?.Structure?.Alignment?.Horizontal === configurationSource?.Structure?.Alignment?.Horizontal"  
-    [resetHostEvents]="hostEvents" 
-    [groupType]="'horizontal-align'" [subHeader]="'CONTENT_POSITION' | translate"
-    [btnKey]="configuration?.Structure?.MaxWidth !== '100' ? configuration?.Structure?.Alignment?.Horizontal: 'unset'" 
-    [disabled]="configuration?.Structure?.MaxWidth == 100"
-    (btnkeyChange)="onFieldChange('Alignment.Horizontal',$event)">
+<div class="page-builder-editor-container">
+    <pep-group-buttons-settings
+        [groupType]="'custom'" 
+        [btnsArray]="inputTypes"
+        [subHeader]="'INPUT_TYPE.TITLE' | translate"
+        [btnKey]="configuration?.Structure?.InputType || 'rich'" >
     </pep-group-buttons-settings>
-</div>
-<div>
-    <pep-slider 
+    
+    <div>
+        <label class="body-xs normal ellipsis">{{'HTML_FILE' | translate}}</label>
+        <pep-button sizeType="md" [styleType]="'regular'" 
+                    [value]="'CHOOSE_ASSET' | translate"  
+                    iconName="system_file_upload_cloud"
+                    [disabled]="configuration?.Structure?.InputType !== 'file'"
+                    (click)="onOpenAssetsDialog();">
+        </pep-button>
+    </div>
+    
+    <div class="ql-editor">
+        <pep-textarea *ngIf="configuration?.Structure?.InputType !== 'rich'"
+            [value]="richHtml" 
+            [label]="(configuration?.Structure?.InputType == 'text' ? 'TEXT_CONTENT' : 'FILE_CONTENT') | translate"
+            [rowSpan]="3" 
+            [disabled]="configuration?.Structure?.InputType === 'file'"
+            (valueChange)="richTextChanged($event)">
+        </pep-textarea>
+    
+        <pep-rich-text
+            *ngIf="configuration?.Structure?.InputType === 'rich'"
+            [key]="'richText1'" 
+            [label]="'HTML_TEXT' | translate"
+            [renderTitle]="true" 
+            [renderEnlargeButton]="configuration?.Structure?.InputType === 'rich'"
+            [value]="richHtml" 
+            [rowSpan]="3" 
+            [maxFieldCharacters]="300" 
+            [xAlignment]="'left'" 
+            [inlineMode]="false"
+            (valueChange)="richTextChanged($event)"
+            [sanitize]="false">
+        </pep-rich-text>
+    </div>
+    <div class="editor-separator"></div>
+    <div>
+        <pep-checkbox class="checkbox-as-title" [value]="configuration?.Structure?.FillHeight || false" [label]="'FILL_HEIGHT_SECTION_TITLE' | translate" [renderTitle]="false" (valueChange)="onFieldChange('FillHeight',$event)"></pep-checkbox>
+        <span class="header-title body-xs checkbox-description">{{('FILL_HEIGHT_SECTION_DESCRIPTION' | translate)}}</span>
+    </div>
+    <div>
+        <pep-textbox pepResetConfigurationField="Structure.Height" 
+                     [hideReset]="configuration?.Structure?.Height === configurationSource?.Structure?.Height"  
+                     [resetHostEvents]="hostEvents" 
+        [label]="'HEIGHT' | translate" type="real" [disabled]="configuration?.Structure?.FillHeight || false"
+                    [value]="configuration?.Structure?.Height" (valueChange)="onFieldChange('Height',$event)">
+        </pep-textbox>
+        <pep-group-buttons-settings
+            pepResetConfigurationField="Structure.InnerPadding" 
+            [hideReset]="configuration?.Structure?.InnerPadding === configurationSource?.Structure?.InnerPadding"  
+            [resetHostEvents]="hostEvents" 
+            [groupType]="'sizes'" [subHeader]="'INNERPADDING_TITLE' | translate" [useNone]="true"
+            [btnKey]="configuration?.Structure?.InnerPadding || 'sm'" [excludeKeys]="['lg','xl','2xl']"
+            (btnkeyChange)="onFieldChange('InnerPadding',$event)">
+        </pep-group-buttons-settings> 
+        <pep-textbox
+            pepResetConfigurationField="Structure.MaxWidth" 
+            [hideReset]="configuration?.Structure?.MaxWidth === configurationSource?.Structure?.MaxWidth"  
+            [resetHostEvents]="hostEvents" 
+            [label]="'MAX_WIDTH' | translate" type="string"
+            [value]="configuration?.Structure?.MaxWidth" (valueChange)="onFieldChange('MaxWidth',$event)">
+        </pep-textbox>
+        <pep-group-buttons-settings
+            pepResetConfigurationField="Structure.Alignment.Horizontal" 
+            [hideReset]="configuration?.Structure?.Alignment?.Horizontal === configurationSource?.Structure?.Alignment?.Horizontal"  
+            [resetHostEvents]="hostEvents" 
+            [groupType]="'horizontal-align'" [subHeader]="'CONTENT_POSITION' | translate"
+            [btnKey]="configuration?.Structure?.MaxWidth !== '100' ? configuration?.Structure?.Alignment?.Horizontal: 'unset'" 
+            [disabled]="configuration?.Structure?.MaxWidth == 100"
+            (btnkeyChange)="onFieldChange('Alignment.Horizontal',$event)">
+        </pep-group-buttons-settings>
+        <pep-slider 
             pepResetConfigurationField="Structure.Columns.Columns" 
             [hideReset]="configuration?.Structure?.Columns?.Columns === configurationSource?.Structure?.Columns?.Columns"  
             [resetHostEvents]="hostEvents"
@@ -91,21 +88,23 @@
             [value]="configuration?.Structure?.Columns.Columns"
             [background]="'RGBA(0,0,0,50%)'"
             (inputChange)="onFieldChange('Columns.Columns',$event)">
-    </pep-slider>
-    <pep-group-buttons-settings
-                    pepResetConfigurationField="Structure.Columns.ColumnGap" 
-                    [hideReset]="configuration?.Structure?.Columns?.ColumnGap === configurationSource?.Structure?.Columns?.ColumnGap"  
-                    [resetHostEvents]="hostEvents" 
-                    [groupType]="'sizes'" [subHeader]="'COLUMNS_GAP' | translate" 
-                    [useNone]="false"
-                    [disabled]="configuration?.Structure?.Columns?.Columns == 1"
-                    [btnKey]="configuration?.Structure?.Columns?.Columns === 1 ? 'unset' : configuration?.Structure?.Columns.ColumnGap || 'xs'" 
-                    [excludeKeys]="['xl','2xl']"
-                    (btnkeyChange)="onFieldChange('Columns.ColumnGap',$event)">
-</pep-group-buttons-settings> 
-</div>
- <div>
-    <label class="body-xl bold ellipsis">{{'ONLOAD_FLOW' | translate}}</label>
-    <label class="body-sm">{{'FLOW_ONLOAD_DESC' | translate}}</label>
-    <pep-flow-picker-button [flowHostObject]="flowHostObject" (flowChange)="onFlowChange($event)"></pep-flow-picker-button>
+        </pep-slider>
+        <pep-group-buttons-settings
+            pepResetConfigurationField="Structure.Columns.ColumnGap" 
+            [hideReset]="configuration?.Structure?.Columns?.ColumnGap === configurationSource?.Structure?.Columns?.ColumnGap"  
+            [resetHostEvents]="hostEvents" 
+            [groupType]="'sizes'" [subHeader]="'COLUMNS_GAP' | translate" 
+            [useNone]="false"
+            [disabled]="configuration?.Structure?.Columns?.Columns == 1"
+            [btnKey]="configuration?.Structure?.Columns?.Columns === 1 ? 'unset' : configuration?.Structure?.Columns.ColumnGap || 'xs'" 
+            [excludeKeys]="['xl','2xl']"
+            (btnkeyChange)="onFieldChange('Columns.ColumnGap',$event)">
+        </pep-group-buttons-settings> 
+        <div class="editor-separator"></div>
+    </div>
+    <div>
+        <label class="editor-title">{{'ONLOAD_FLOW' | translate}}</label>
+        <label class="body-sm">{{'FLOW_ONLOAD_DESC' | translate}}</label>
+        <pep-flow-picker-button [flowHostObject]="flowHostObject" styleType="regular" (flowChange)="onFlowChange($event)"></pep-flow-picker-button>
+    </div>
 </div>
