@@ -1,21 +1,13 @@
 <div class="page-builder-editor-container">
-    <pep-group-buttons-settings
-        [groupType]="'custom'" 
-        [btnsArray]="inputTypes"
-        [subHeader]="'INPUT_TYPE.TITLE' | translate"
-        [btnKey]="configuration?.Structure?.InputType || 'rich'" >
-    </pep-group-buttons-settings>
-    
     <div>
-        <label class="body-xs normal ellipsis">{{'HTML_FILE' | translate}}</label>
-        <pep-button sizeType="md" [styleType]="'regular'" 
-                    [value]="'CHOOSE_ASSET' | translate"  
-                    iconName="system_file_upload_cloud"
-                    [disabled]="configuration?.Structure?.InputType !== 'file'"
-                    (click)="onOpenAssetsDialog();">
-        </pep-button>
+        <label class="editor-title">{{'CONTENT' | translate}}</label>
+        <pep-group-buttons-settings
+            [groupType]="'custom'" 
+            [btnsArray]="inputTypes"
+            [subHeader]="'INPUT_TYPE.TITLE' | translate"
+            [btnKey]="configuration?.Structure?.InputType || 'rich'" >
+        </pep-group-buttons-settings>
     </div>
-    
     <div class="ql-editor">
         <pep-textarea *ngIf="configuration?.Structure?.InputType !== 'rich'"
             [value]="richHtml" 
@@ -39,6 +31,15 @@
             (valueChange)="richTextChanged($event)"
             [sanitize]="false">
         </pep-rich-text>
+    </div>
+    <div>
+        <label class="body-xs normal ellipsis">{{'HTML_FILE' | translate}}</label>
+        <pep-button sizeType="md" [styleType]="'regular'" 
+                    [value]="'CHOOSE_ASSET' | translate"  
+                    iconName="system_file_upload_cloud"
+                    [disabled]="configuration?.Structure?.InputType !== 'file'"
+                    (click)="onOpenAssetsDialog();">
+        </pep-button>
     </div>
     <div class="editor-separator"></div>
     <div>
@@ -104,7 +105,7 @@
     </div>
     <div>
         <label class="editor-title">{{'ONLOAD_FLOW' | translate}}</label>
-        <label class="body-sm">{{'FLOW_ONLOAD_DESC' | translate}}</label>
+        <pep-field-title [label]="'FLOW_ONLOAD_DESC' | translate"></pep-field-title>
         <pep-flow-picker-button [flowHostObject]="flowHostObject" styleType="regular" (flowChange)="onFlowChange($event)"></pep-flow-picker-button>
     </div>
 </div>

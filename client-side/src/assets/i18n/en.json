@@ -1,4 +1,5 @@
 {
+    "CONTENT": "Content",
     "FILL_HEIGHT_SECTION_TITLE": "Fill Height",
     "FILL_HEIGHT_SECTION_DESCRIPTION": "Set Fill Height on to make the view to fill the section height",
     "HEIGHT": "Height (rem)",
